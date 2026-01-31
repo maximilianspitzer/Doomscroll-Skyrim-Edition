@@ -119,8 +119,8 @@ def main():
 
             right = [one_face_landmark_points[374], one_face_landmark_points[386]]
             for landmark_point in right:
-                    x = int(landmark_point.x * width)
-                    y = int(landmark_point.y * height)
+                x = int(landmark_point.x * width)
+                y = int(landmark_point.y * height)
                  
             
             lx = int((left[0].x + left[1].x) / 2 * width)
