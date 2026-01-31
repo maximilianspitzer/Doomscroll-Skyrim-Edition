@@ -73,20 +73,19 @@ The minimum amount of time the user must be “looking down” before triggering
 timer = 2.0  
 ```
 
-### `looking_down_threshold`
-The gaze score required to consider the user as looking down.
-- Lower value → more sensitive, triggers on slight downward gaze
-- Higher value → more strict, requires stronger downward gaze
+### `start_threshold`
+The gaze score required to start the video.
+- Higher value → more strict, requires stronger downward gaze to trigger
 
 ```python
-looking_down_threshold = 0.3
+start_threshold = 0.4
 ```
 
-### `debounce_threshold`
-The threshold used while the video is playing. Higher than `looking_down_threshold` to prevent the video from stopping too easily.
+### `maintain_threshold`
+The threshold used while the video is playing. Lower than `start_threshold` so the video keeps playing unless you clearly look up.
 
 ```python
-debounce_threshold = 0.4
+maintain_threshold = 0.3
 ```
 
 ---

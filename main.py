@@ -83,8 +83,8 @@ def draw_warning(frame, text="lock in twin"):
 
 def main():
     timer = 2.0
-    looking_down_threshold = 0.3
-    debounce_threshold = 0.4
+    start_threshold = 0.4
+    maintain_threshold = 0.3
 
     skyrim_skeleton_video = Path("./assets/skyrim-skeleton.mp4").resolve()
     if not skyrim_skeleton_video.exists():
@@ -93,7 +93,7 @@ def main():
 
     model_path = Path("./assets/face_landmarker.task").resolve()
     if not model_path.exists():
-        print("Could not find face_landmarker.task model")
+        print("Missing model. Run: curl -o assets/face_landmarker.task https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task")
         return
 
     options = FaceLandmarkerOptions(
@@ -132,11 +132,11 @@ def main():
 
             blendshapes = result.face_blendshapes
 
-            if face_landmark_points and blendshapes:
+            if blendshapes and len(blendshapes[0]) > 12:
                 bs = blendshapes[0]
                 look_down_score = (bs[11].score + bs[12].score) / 2.0
 
-                threshold = debounce_threshold if video_playing else looking_down_threshold
+                threshold = maintain_threshold if video_playing else start_threshold
                 is_looking_down = look_down_score > threshold
 
                 if is_looking_down:
