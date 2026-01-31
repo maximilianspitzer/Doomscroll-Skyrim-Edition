@@ -37,17 +37,23 @@
 git clone https://github.com/reinesana/Doomscroll-Skyrim-Edition.git
 ```
 
-### 2. Install dependencies
+### 2. Create a virtual environment (recommended)
+```bash
+python -m venv .venv
+source .venv/bin/activate
+```
+
+### 3. Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Download the face landmarker model
+### 4. Download the face landmarker model
 ```bash
 curl -o assets/face_landmarker.task https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task
 ```
 
-### 4. Run the program
+### 5. Run the program
 ```bash
 python main.py
 ```

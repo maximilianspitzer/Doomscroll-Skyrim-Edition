@@ -112,6 +112,8 @@ def main():
 
     doomscroll = None
     video_playing = False
+    not_looking_count = 0
+    reset_threshold = 10
 
     with FaceLandmarker.create_from_options(options) as landmarker:
         while True:
@@ -138,6 +140,7 @@ def main():
                 is_looking_down = look_down_score > threshold
 
                 if is_looking_down:
+                    not_looking_count = 0
                     if doomscroll is None:
                         doomscroll = current
 
@@ -147,15 +150,19 @@ def main():
                             video_playing = True
 
                 else:
+                    not_looking_count += 1
+                    if not_looking_count >= reset_threshold:
+                        doomscroll = None
+                        if video_playing:
+                            close_video(skyrim_skeleton_video)
+                            video_playing = False
+            else:
+                not_looking_count += 1
+                if not_looking_count >= reset_threshold:
                     doomscroll = None
                     if video_playing:
                         close_video(skyrim_skeleton_video)
                         video_playing = False
-            else:
-                doomscroll = None
-                if video_playing:
-                    close_video(skyrim_skeleton_video)
-                    video_playing = False
 
             if video_playing:
                 draw_warning(frame, "doomscrolling alarm")
